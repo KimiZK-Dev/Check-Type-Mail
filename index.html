@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra Email</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #74ebd5;
+        }
+
+        button {
+            background: #74ebd5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #5dc4b9;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .valid {
+            color: green;
+        }
+
+        .invalid {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kiểm Tra Email</h1>
+        <input type="text" id="emailInput" placeholder="Nhập email của bạn" />
+        <button onclick="checkEmail()">Kiểm Tra</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        // Event -> Enter
+        document.getElementById("emailInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkEmail();
+            }
+        });
+
+        // Kiểm tra dạng mail
+        function checkEmail() {
+            const email = document.getElementById("emailInput").value;
+            const resultElement = document.getElementById("result");
+            
+            if (isValidEmail(email)) {
+                resultElement.textContent = "✅ Email hợp lệ!";
+                resultElement.className = "valid";
+            } else {
+                resultElement.textContent = "❌ Email không hợp lệ!";
+                resultElement.className = "invalid";
+            }
+        }
+
+        // Xác thực dạng mail
+        function isValidEmail(email) {
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const allowedDomains = ["gmail.com", "outlook.com", "yahoo.com", "hotmail.com", "icloud.com"];
+            const domain = email.split('@')[1]?.toLowerCase();
+            return emailPattern.test(email) && allowedDomains.includes(domain);
+        }
+    </script>
+</body>
+</html>
